@@ -52,7 +52,7 @@ public class Parser {
 				+ "	xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
 				+ "	xsi:schemaLocation=\"http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd\">\n"
 				+ "" + lineBreak);
-		fileWriter.write("<changeSet author=\"<<author>>\" id=\"1\">" + lineBreak);
+		fileWriter.write("<changeSet author=\"***author***\" id=\"1\">" + lineBreak);
 		fileWriter.write("<createTable tableName=\"" + originalFileName + "\" remarks=\"" + originalFileName + "\">"+ lineBreak);
 		while (iterator.hasNext()) {
 			String currLine = iterator.next().trim();
@@ -61,7 +61,8 @@ public class Parser {
 			String databaseColumnName = currInputs[0].toLowerCase();
 			String dataType = getLiqubaseDataType(currInputs[1]);
 
-			fileWriter.write("<column name=\"" + databaseColumnName + "\" type=\"" + dataType + "\" />" + lineBreak);
+			fileWriter.write("<column name=\"" + databaseColumnName + "\" type=\"" + dataType + "\" >" + lineBreak);
+			fileWriter.write("</column>" + lineBreak);
 		}
 		fileWriter.write("</createTable>" + lineBreak);
 		fileWriter.write("</changeSet>" + lineBreak);
@@ -161,9 +162,9 @@ public class Parser {
 			return "Integer";
 		} else if (dataTypeCode == 'S' || dataTypeCode == 's') {
 			return "String";
-		} else if (dataTypeCode == 'B' || dataTypeCode == 'b') {
+		} else if (dataTypeCode == 'b') {
 			return "boolean";
-		} else if (dataTypeCode == 'D' || dataTypeCode == 'd') {
+		} else if (dataTypeCode == 'B') {
 			return "BigDecimal";
 		} else if (dataTypeCode == 'F' || dataTypeCode == 'f') {
 			return "Float";
@@ -172,9 +173,9 @@ public class Parser {
 		} else if (dataTypeCode == 'T' || dataTypeCode == 't') {
 			return "LocalDateTime";
 		} else if (dataTypeCode == 'E' || dataTypeCode == 'e') {
-			return "<<ENTER ENUM>>";
+			return "***ENTER_ENUM***";
 		} else {
-			return "<<ENTER DATATYPE>>";
+			return "***ENTER_DATATYPE***";
 		}
 	}
 	private String getLiqubaseDataType(String dataTypeString) {
@@ -183,9 +184,9 @@ public class Parser {
 			return "integer";
 		} else if (dataTypeCode == 'S' || dataTypeCode == 's') {
 			return "varchar(32)";
-		} else if (dataTypeCode == 'B' || dataTypeCode == 'b') {
+		} else if (dataTypeCode == 'b') {
 			return "boolean";
-		} else if (dataTypeCode == 'D' || dataTypeCode == 'd') {
+		} else if (dataTypeCode == 'B') {
 			return "decimal(17,2)";
 		} else if (dataTypeCode == 'F' || dataTypeCode == 'f') {
 			return "decimal(5,2)";
@@ -194,9 +195,9 @@ public class Parser {
 		} else if (dataTypeCode == 'T' || dataTypeCode == 't') {
 			return "timestamp";
 		} else if (dataTypeCode == 'E' || dataTypeCode == 'e') {
-			return "<<ENTER ENUM>>";
+			return "***ENTER_ENUM***";
 		} else {
-			return "<<ENTER DATATYPE>>";
+			return "***ENTER_DATATYPE***";
 		}
 	}
 
